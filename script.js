@@ -137,6 +137,10 @@ function searchItem() {
       nothingFound.textContent = 'Ничего не найдено';
     }
   }
+  else {
+    addItems(items);
+  }
 }
+
 addItems(items);
 searchButton.addEventListener('click', searchItem);
