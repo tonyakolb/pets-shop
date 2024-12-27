@@ -84,3 +84,59 @@ const items = [
     img: "./img/12.jpeg",
   },
 ];
+
+const containerItems = document.querySelector('#shop-items')
+const itemTemplate = document.querySelector('#item-template');
+const searchButton = document.querySelector('#search-btn');
+const searchInput = document.querySelector('#search-input');
+const nothingFound = document.querySelector('#nothing-found');
+
+function makeCardByTemplate(cardItem) {
+  const { title, description, tags, price, img } = cardItem;
+
+  const productCard = itemTemplate.content.cloneNode(true);
+
+  productCard.querySelector('h1').textContent = title;
+  productCard.querySelector('p').textContent = description;
+  productCard.querySelector('img').src = img;
+  productCard.querySelector('.price').textContent = `${price}P`;
+
+  const tagsValues = productCard.querySelector('.tags');
+
+  tags.forEach((tag) => {
+    const tagContainer = document.createElement('span');
+    tagContainer.textContent = tag;
+    tagContainer.classList.add('tag');
+    tagsValues.append(tagContainer);
+  })
+
+  containerItems.append(productCard);
+}
+
+function addItems(array) {
+  array.forEach(element => {
+    makeCardByTemplate(element)
+  });
+}
+
+function searchItem() {
+  const inputText = searchInput.value.trim().toLowerCase();
+
+  containerItems.innerHTML = '';
+  nothingFound.textContent = '';
+
+  if (inputText != '') {
+    const filteredItems = items.filter(element =>
+      element.title.trim().toLowerCase().includes(inputText)
+    )
+
+    if (filteredItems.length !== 0) {
+      addItems(filteredItems);
+    }
+    else {
+      nothingFound.textContent = 'Ничего не найдено';
+    }
+  }
+}
+addItems(items);
+searchButton.addEventListener('click', searchItem);
