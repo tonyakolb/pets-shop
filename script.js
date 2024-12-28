@@ -125,20 +125,15 @@ function searchItem() {
   containerItems.innerHTML = '';
   nothingFound.textContent = '';
 
-  if (inputText != '') {
-    const filteredItems = items.filter(element =>
-      element.title.trim().toLowerCase().includes(inputText)
-    )
+  const filteredItems = items.filter(element =>
+    element.title.trim().toLowerCase().includes(inputText)
+  )
 
-    if (filteredItems.length !== 0) {
-      addItems(filteredItems);
-    }
-    else {
-      nothingFound.textContent = 'Ничего не найдено';
-    }
+  if (filteredItems.length !== 0) {
+    addItems(filteredItems);
   }
   else {
-    addItems(items);
+    nothingFound.textContent = 'Ничего не найдено';
   }
 }
 
